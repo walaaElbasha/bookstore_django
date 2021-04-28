@@ -1,0 +1,13 @@
+
+<title>Login</title>
+<body>
+<h2>
+    please login
+</h2>
+<form action="{%url 'login' %}" method="post">
+    {{% csrf_token}}
+    {{form.as_p}}
+    <button type="submit">Login</button>
+</form>
+
+</body>

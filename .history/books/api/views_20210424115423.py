@@ -1,0 +1,31 @@
+#from django .shortcuts import render,redirect
+from rest_framework.response import Response
+from rest_framework import status
+from books.models import Book
+from .serializers import BookSerializer
+from rest_framework.decorators import api_view
+from django.contrib.auth.decorators import api_view,permission_classes
+def index(request):
+    books = Book.object.objects.all()
+    serializer=BookSerializer(instance=books,many=True)
+    return Response(data=serializer.data,status=status_HTTP_200_ok)
+
+@api_view(["POST"])
+def create(request):
+    serializer=BookSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(data=serializer{
+        "success":True,
+        "message":"Book has been created successfully",
+        },
+        status=status.HTTP_200_OK,
+        )
+    return Response(data={
+        "success":False,
+        "errors":serializer.errors
+    },status=status.HTTP_404_BADREQUEST,
+    
+    )
+
+@api_view(["GET"])
